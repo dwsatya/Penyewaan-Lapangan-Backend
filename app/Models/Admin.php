@@ -11,13 +11,13 @@ use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Str;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
+class Admin extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable, HasFactory;
 
     public $incrementing = false; // Disable auto incrementing
     protected $keyType = 'string'; // Set primary key type
-    protected $table = 'users'; // Table name
+    protected $table = 'admins'; // Table name
     protected $fillable = [
         'userName',
         'email',

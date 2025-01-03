@@ -17,6 +17,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+// Auth
+$router->post('/signin', 'AuthController@signin');
+
 /*
 CRUD USER
 */
