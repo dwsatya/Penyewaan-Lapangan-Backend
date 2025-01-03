@@ -8,24 +8,30 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('username')->unique();
+            $table->uuid('id')->primary();
+            $table->string('userName');
             $table->string('email')->unique();
-            $table->string('password', 255); 
-            $table->string('no_telepon', 15)->nullable(); 
+            $table->string('password');
+            $table->string('role')->default('user');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['order_id']);
+        });
     }
 };
