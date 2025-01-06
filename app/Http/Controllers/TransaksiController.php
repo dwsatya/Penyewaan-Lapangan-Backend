@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 
 class TransaksiController extends Controller
@@ -26,18 +27,27 @@ class TransaksiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         // Validasi data
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'id_user' => 'required|exists:users,id',
-            'id_lapangan' => 'required|exists:lapangan,id',
+            'id_lapangan' => 'required|exists:detail_lapangan,id',
             'id_pelatih' => 'nullable|exists:pelatih,id',
-            'total_harga' => 'required|numeric|min:0',
+            'total_harga' => 'nullable|numeric|min:0',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
         // Membuat transaksi baru
-        $transaksi = Transaksi::create($validated);
+        $transaksi = Transaksi::create($validator->validated());
 
         return response()->json([
             'success' => true,
@@ -45,6 +55,7 @@ class TransaksiController extends Controller
             'data' => $transaksi,
         ]);
     }
+
 
     /**
      * Display the specified resource.
