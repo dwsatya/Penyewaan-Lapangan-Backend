@@ -48,7 +48,7 @@ $router->delete('/pelatih/{id}', 'PelatihController@destroy');
 $router->put('/pelatih/{id}', 'PelatihController@update');
 
 /*
-CRUD PELATIH
+CRUD TRANSAKSI
 */
 $router->get('/transaksi', 'TransaksiController@index');
 $router->post('/transaksi', 'TransaksiController@store');
